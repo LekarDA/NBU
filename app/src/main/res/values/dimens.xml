@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="titleSize">24sp</dimen>
+    <dimen name="codeSize">18sp</dimen>
+    <dimen name="text_titles_size">18sp</dimen>
+    <dimen name="main_margin">8dp</dimen>
+    <dimen name="margin">8dp</dimen>
+</resources>

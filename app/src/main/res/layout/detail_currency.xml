@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="@dimen/text_titles_size"
+            android:layout_margin="@dimen/main_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+            android:id="@+id/dateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_titles_size"
+            android:textColor="@color/text_color"
+            android:layout_margin="@dimen/main_margin"
+            app:layout_constraintStart_toEndOf="@+id/date"
+            app:layout_constraintTop_toTopOf="@+id/date"
+            app:layout_constraintBottom_toBottomOf="@+id/date"/>
+    <TextView
+            android:id="@+id/currentData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_value"
+            android:textSize="@dimen/text_titles_size"
+            android:layout_margin="@dimen/main_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date"/>
+    <TextView
+            android:id="@+id/currentValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_titles_size"
+            android:textColor="@color/text_color"
+            android:layout_margin="@dimen/main_margin"
+            app:layout_constraintStart_toEndOf="@+id/currentData"
+            app:layout_constraintTop_toTopOf="@+id/currentData"
+            app:layout_constraintBottom_toBottomOf="@+id/currentData"/>
+    <TextView
+            android:id="@+id/code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/code"
+            android:textSize="@dimen/text_titles_size"
+            android:layout_margin="@dimen/main_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentData"/>
+    <TextView
+            android:id="@+id/codeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_titles_size"
+            android:textColor="@color/text_color"
+            android:layout_margin="@dimen/main_margin"
+            app:layout_constraintStart_toEndOf="@+id/code"
+            app:layout_constraintTop_toTopOf="@+id/code"
+            app:layout_constraintBottom_toBottomOf="@+id/code"/>
+</android.support.constraint.ConstraintLayout>
