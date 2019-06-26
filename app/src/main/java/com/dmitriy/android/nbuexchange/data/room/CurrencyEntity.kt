@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 class CurrencyEntity(@PrimaryKey val id : Int, val name : String?, val code : String?): Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),

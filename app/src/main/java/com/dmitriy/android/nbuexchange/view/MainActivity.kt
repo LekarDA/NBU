@@ -67,20 +67,23 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener{
 
     fun onResponse(data:List<Currency>) {
         launch {
+
             val mappingManager = MappingManager()
-            for(currency in data){
+            for (currency in data) {
                 mappingManager.mapping(currency)
             }
-            for(entity in mappingManager.listCurrencyEntity){
-                App.instance.dataBase?.exchangeDao()?.insertCurrency(entity)
-            }
-            for (entity in mappingManager.listExchangeEntity){
-                App.instance.dataBase?.exchangeDao()?.insertExchange(entity)
-            }
+
+//                for(entity in mappingManager.listCurrencyEntity){
+                   async {   App.instance.dataBase?.exchangeDao()?.insertCurrency(mappingManager.listCurrencyEntity)}.await()
+//                }
+//                for (entity in mappingManager.listExchangeEntity){
+                    async {  App.instance.dataBase?.exchangeDao()?.insertExchange(mappingManager.listExchangeEntity)}.await()
+//                }
+
         }
         var listCurrencyEntityFromDB = ArrayList<CurrencyEntity>()
         launch {
-            async(Dispatchers.IO) {
+            async{
                 listCurrencyEntityFromDB = App.instance.dataBase?.exchangeDao()?.getAll() as ArrayList<CurrencyEntity>
             }.await()
         }
@@ -91,9 +94,9 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener{
     override fun onItemClick(currencyId: Int?) {
         var exchangeEntity: ExchangeEntity?=null
         launch {
-            async(Dispatchers.IO) {
+//            async {
                 exchangeEntity = App.instance.dataBase?.exchangeDao()?.getExchangeById(currencyId?.toLong())
-            }.await()
+//            }.await()
         }
 
         val intent = DetailActivity.newIntent(this, exchangeEntity)

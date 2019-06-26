@@ -11,7 +11,7 @@ class MappingManager {
 
 
     suspend fun mapping(currency: Currency){
-        listCurrencyEntity.add(CurrencyEntity(currency.id,currency.name,currency.code))
-        listExchangeEntity.add(ExchangeEntity(currency.id,currency.exchangeDate,currency.rate))
+        listCurrencyEntity.add(CurrencyEntity(currency.id + (0..1000000).random(),currency.name,currency.code))
+        listExchangeEntity.add(ExchangeEntity(currency.id+ (0..1000000).random(),currency.exchangeDate,currency.rate))
     }
 }
