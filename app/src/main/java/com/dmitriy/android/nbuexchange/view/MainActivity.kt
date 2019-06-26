@@ -72,14 +72,8 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener{
             for (currency in data) {
                 mappingManager.mapping(currency)
             }
-
-//                for(entity in mappingManager.listCurrencyEntity){
-                   async {   App.instance.dataBase?.exchangeDao()?.insertCurrency(mappingManager.listCurrencyEntity)}.await()
-//                }
-//                for (entity in mappingManager.listExchangeEntity){
-                    async {  App.instance.dataBase?.exchangeDao()?.insertExchange(mappingManager.listExchangeEntity)}.await()
-//                }
-
+            async { App.instance.dataBase?.exchangeDao()?.insertCurrency(mappingManager.listCurrencyEntity) }.await()
+            async { App.instance.dataBase?.exchangeDao()?.insertExchange(mappingManager.listExchangeEntity) }.await()
         }
         var listCurrencyEntityFromDB = ArrayList<CurrencyEntity>()
         launch {
