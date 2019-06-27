@@ -10,6 +10,7 @@ import com.dmitriy.android.nbuexchange.data.Currency
 import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
 import com.dmitriy.android.nbuexchange.data.room.ExchangeEntity
 import com.dmitriy.android.nbuexchange.managers.MappingManager
+import com.dmitriy.android.nbuexchange.presenter.ListPresenterContract
 import com.dmitriy.android.nbuexchange.service.NBUApiService
 import com.dmitriy.android.nbuexchange.view.adapter.CurrencyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,34 +18,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
+import javax.inject.Inject
 
 
-class MainActivity : CoroutineAppCompatActivity(),ItemClickListener{
+class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresenterContract.ListView{
 
+
+    @Inject
+    lateinit var presenter:ListPresenterContract.ListPresenter
 
     private val CURRENCY_DATA = "CURRENCY_DATA"
     private lateinit var  layoutManager : LinearLayoutManager
     private lateinit var adapter : CurrencyListAdapter
-    private val BASE_URL = "statdirectory/exchange"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val component = (application as App).component
+        presenter.setView(this)
         initList()
-        val apiService = NBUApiService.create()
-        if (savedInstanceState != null) adapter.setCurrencyList(savedInstanceState.getParcelableArrayList(CURRENCY_DATA))
-        else {
-            launch {
-                try {
-                    val response = apiService.getCurrentCurrency(baseUrl = BASE_URL, value = "")
-                    if (response.isSuccessful) this@MainActivity.onResponse(response.body()!!)
-                    else this@MainActivity.onFailure(response.errorBody())
-                } catch (e: Exception) {
-                    Log.i("ExchangeApp", "exception" + e.toString())
-                }
-            }
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -61,40 +53,14 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener{
     }
 
 
-    fun onFailure(error: ResponseBody?) {
-        Log.i("ExchangeApp","error" + error?.string())
-    }
-
-    fun onResponse(data:List<Currency>) {
-        launch {
-
-            val mappingManager = MappingManager()
-            for (currency in data) {
-                mappingManager.mapping(currency)
-            }
-            async { App.instance.dataBase?.exchangeDao()?.insertCurrency(mappingManager.listCurrencyEntity) }.await()
-            async { App.instance.dataBase?.exchangeDao()?.insertExchange(mappingManager.listExchangeEntity) }.await()
-        }
-        var listCurrencyEntityFromDB = ArrayList<CurrencyEntity>()
-        launch {
-            async{
-                listCurrencyEntityFromDB = App.instance.dataBase?.exchangeDao()?.getAll() as ArrayList<CurrencyEntity>
-            }.await()
-        }
-
-        adapter.setCurrencyList(listCurrencyEntityFromDB)
+    override fun setDataInList(listCurrency: ArrayList<CurrencyEntity>) {
+        adapter.setCurrencyList(listCurrency)
     }
 
     override fun onItemClick(currencyId: Int?) {
-        var exchangeEntity: ExchangeEntity?=null
-        launch {
-//            async {
-                exchangeEntity = App.instance.dataBase?.exchangeDao()?.getExchangeById(currencyId?.toLong())
-//            }.await()
-        }
-
-        val intent = DetailActivity.newIntent(this, exchangeEntity)
-        startActivity(intent)
+//        var exchangeEntity: ExchangeEntity?=null
+//        val intent = DetailActivity.newIntent(this, exchangeEntity)
+//        startActivity(intent)
     }
 }
 

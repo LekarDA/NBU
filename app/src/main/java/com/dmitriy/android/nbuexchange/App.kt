@@ -2,15 +2,18 @@ package com.dmitriy.android.nbuexchange
 
 import android.app.Application
 import androidx.room.Room
+import com.dmitriy.android.nbuexchange.dagger.AppComponent
 import com.dmitriy.android.nbuexchange.data.room.AppDataBase
 
 class App: Application() {
-    var dataBase:AppDataBase?=null
+    var component:AppComponent? = null
 
     override fun onCreate() {
         super.onCreate()
         instance = this
-        dataBase = Room.databaseBuilder(applicationContext, AppDataBase::class.java, "database").build()
+        component = DaggerAppComponent.builder()
+            .mainModule(instance)
+            .build()
     }
 
     companion object{
