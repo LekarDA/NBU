@@ -5,7 +5,7 @@ import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
 
 interface ListPresenterContract {
     interface ListPresenter{
-        fun getData():List<CurrencyEntity>?
+        fun loadData()
 
         fun onViewDestroy()
 
@@ -13,6 +13,6 @@ interface ListPresenterContract {
     }
 
     interface ListView: BaseView{
-        fun setDataInList(listCurrency : ArrayList<CurrencyEntity>)
+        fun setDataInList(listCurrency : List<CurrencyEntity>?)
     }
 }

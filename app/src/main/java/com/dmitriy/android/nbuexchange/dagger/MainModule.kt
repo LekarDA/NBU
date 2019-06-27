@@ -5,7 +5,9 @@ import android.content.Context
 import androidx.room.Room
 import com.dmitriy.android.nbuexchange.data.room.AppDataBase
 import com.dmitriy.android.nbuexchange.managers.MappingManager
-import com.dmitriy.android.nbuexchange.presenter.ListPresenter
+import com.dmitriy.android.nbuexchange.presenter.ListPresenterContract
+import com.dmitriy.android.nbuexchange.presenter.ListPresenterImpl
+import com.dmitriy.android.nbuexchange.repository.Repository
 import com.dmitriy.android.nbuexchange.repository.RepositoryImplementation
 import com.dmitriy.android.nbuexchange.service.NBUApiService
 import dagger.Module
@@ -18,45 +20,38 @@ import javax.inject.Singleton
 class MainModule(private val application: Application) {
 
 
-
     @Provides
     @Singleton
-    @MainScope
-    fun providePresentor():ListPresenter{
-        return ListPresenter()
+    fun providePresentor():ListPresenterContract.ListPresenter {
+        return ListPresenterImpl()
     }
 
     @Provides
     @Singleton
-    @MainScope
     @NotNull
-    fun provideRepository():RepositoryImplementation{
+    fun provideRepository(): Repository {
         return RepositoryImplementation(provideNetworkUtils(),provideMapper(),provideDatabaseHelper(provideContext()))
     }
 
     @Provides
     @Singleton
-    @MainScope
     fun provideNetworkUtils(): NBUApiService {
         return NBUApiService.create()
     }
 
     @Provides
-    @MainScope
     fun provideMapper():MappingManager{
         return MappingManager()
     }
 
     @Provides
     @Singleton
-    @MainScope
     fun provideDatabaseHelper(applicationContext: Context): AppDataBase {
         return Room.databaseBuilder(applicationContext, AppDataBase::class.java, "database").build()
     }
 
     @Provides
     @Singleton
-    @MainScope
     fun provideContext(): Context {
         return application.applicationContext
     }

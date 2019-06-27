@@ -2,26 +2,18 @@ package com.dmitriy.android.nbuexchange.view
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dmitriy.android.nbuexchange.App
 import com.dmitriy.android.nbuexchange.R
-import com.dmitriy.android.nbuexchange.data.Currency
 import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
-import com.dmitriy.android.nbuexchange.data.room.ExchangeEntity
-import com.dmitriy.android.nbuexchange.managers.MappingManager
 import com.dmitriy.android.nbuexchange.presenter.ListPresenterContract
-import com.dmitriy.android.nbuexchange.service.NBUApiService
 import com.dmitriy.android.nbuexchange.view.adapter.CurrencyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
 import javax.inject.Inject
 
 
 class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresenterContract.ListView{
+
 
 
     @Inject
@@ -37,6 +29,7 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresente
         App.component.injectActivity(this)
         presenter.setView(this)
         initList()
+        presenter.loadData()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -52,10 +45,10 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresente
         adapter.setItemClickListener(this)
     }
 
-
-    override fun setDataInList(listCurrency: ArrayList<CurrencyEntity>) {
-        adapter.setCurrencyList(listCurrency)
+    override fun setDataInList(listCurrency: List<CurrencyEntity>?) {
+        adapter.setCurrencyList(ArrayList(listCurrency))
     }
+
 
     override fun onItemClick(currencyId: Int?) {
 //        var exchangeEntity: ExchangeEntity?=null

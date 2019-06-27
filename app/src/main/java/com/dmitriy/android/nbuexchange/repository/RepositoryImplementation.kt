@@ -1,6 +1,7 @@
 package com.dmitriy.android.nbuexchange.repository
 
 import android.util.Log
+import com.dmitriy.android.nbuexchange.App
 import com.dmitriy.android.nbuexchange.data.Currency
 import com.dmitriy.android.nbuexchange.data.room.AppDataBase
 import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
@@ -15,9 +16,24 @@ class RepositoryImplementation(val newtworkService : NBUApiService,val mappingMa
 
 
 
+
     override suspend fun getCurrencyList(): List<CurrencyEntity> {
         requestToServer()
         return dataBase.exchangeDao().getAll() as ArrayList<CurrencyEntity>
+    }
+
+    suspend fun requestToServer(){
+        try {
+            val response = newtworkService.getCurrentCurrency(baseUrl = BASE_URL, value = "")
+            if (response.isSuccessful){
+                mapData(response.body())
+            }
+            else {
+                Log.i("ExchangeApp", "exception" + response.errorBody().toString())
+            }
+        } catch (e: Exception) {
+            Log.i("ExchangeApp", "exception" + e.toString())
+        }
     }
 
     suspend fun mapData(data: List<Currency>?){
@@ -34,17 +50,5 @@ class RepositoryImplementation(val newtworkService : NBUApiService,val mappingMa
         dataBase.exchangeDao().insertExchange(exchangeEntities)
     }
 
-    suspend fun requestToServer(){
-        try {
-            val response = newtworkService.getCurrentCurrency(baseUrl = BASE_URL, value = "")
-            if (response.isSuccessful){
-                mapData(response.body())
-            }
-            else {
-                Log.i("ExchangeApp", "exception" + response.errorBody().toString())
-            }
-        } catch (e: Exception) {
-            Log.i("ExchangeApp", "exception" + e.toString())
-        }
-    }
+
 }
