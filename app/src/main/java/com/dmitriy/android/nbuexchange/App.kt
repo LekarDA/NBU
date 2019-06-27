@@ -6,7 +6,6 @@ import com.dmitriy.android.nbuexchange.dagger.AppComponent
 import com.dmitriy.android.nbuexchange.data.room.AppDataBase
 
 class App: Application() {
-    var component:AppComponent? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -18,5 +17,6 @@ class App: Application() {
 
     companion object{
         lateinit var instance :App
+        lateinit var component:AppComponent
     }
 }

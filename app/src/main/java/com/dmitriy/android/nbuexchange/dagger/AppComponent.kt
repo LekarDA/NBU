@@ -6,11 +6,13 @@ import com.dmitriy.android.nbuexchange.repository.RepositoryImplementation
 import com.dmitriy.android.nbuexchange.view.MainActivity
 import dagger.Component
 
-@Component(modules = arrayOf(MainModule::class))
+@Component(modules = arrayOf(MainModule::class/*MainListModule::class*/))
 interface AppComponent {
     fun injectActivity(activity: MainActivity)
 
     fun injectListPresenter(listPresentor:ListPresenter)
 
     fun injectRepository(repository: RepositoryImplementation)
+
+//    fun getPresenter():ListPresenter()
 }

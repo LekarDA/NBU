@@ -34,7 +34,7 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresente
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val component = (application as App).component
+        App.component.injectActivity(this)
         presenter.setView(this)
         initList()
     }
