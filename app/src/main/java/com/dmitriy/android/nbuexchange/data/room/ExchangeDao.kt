@@ -6,10 +6,10 @@ import androidx.room.*
 @Dao
     interface ExchangeDao {
 
-        @Query("SELECT * FROM currencyentity")
-        suspend fun getAll():List<CurrencyEntity>
+        @Query("SELECT * FROM CurrencyEntity")
+        suspend fun getAllCurrencies():List<CurrencyEntity>
 
-        @Query("SELECT * FROM exchangeentity WHERE id = :id")
+        @Query("SELECT * FROM ExchangeEntity WHERE id = :id")
         suspend fun getExchangeById(id : Long?):ExchangeEntity
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)

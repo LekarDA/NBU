@@ -2,10 +2,13 @@ package com.dmitriy.android.nbuexchange.presenter
 
 
 import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
+import com.dmitriy.android.nbuexchange.data.room.ExchangeEntity
 
 interface ListPresenterContract {
     interface ListPresenter{
-        fun loadData()
+        suspend fun getData():List<CurrencyEntity>
+
+        suspend fun getExchangeEntity(id : Long?):ExchangeEntity
 
         fun onViewDestroy()
 
@@ -13,6 +16,6 @@ interface ListPresenterContract {
     }
 
     interface ListView: BaseView{
-        fun setDataInList(listCurrency : List<CurrencyEntity>?)
+//        fun setDataInList(listCurrency : List<CurrencyEntity>?)
     }
 }

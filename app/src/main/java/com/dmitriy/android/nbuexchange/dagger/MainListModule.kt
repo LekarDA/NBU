@@ -3,7 +3,7 @@ package com.dmitriy.android.nbuexchange.dagger
 //@Module
 //interface MainListModule {
 //    @Binds
-//    fun provideMainMenuPresenter(listPresenter : ListPresenterImpl): ListPresenterContract.ListPresenterImpl
+//    fun provideMainMenuPresenter(listPresenter : ListPresenter): ListPresenterContract.ListPresenter
 //
 //    @Binds
 //    fun provideRepository(repository:RepositoryImplementation): Repository

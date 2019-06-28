@@ -11,14 +11,12 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
         component = DaggerAppComponent.builder()
-            .mainModule(MainModule(instance))
+            .mainModule(MainModule(this))
             .build()
     }
 
     companion object{
-        lateinit var instance :App
         lateinit var component:AppComponent
     }
 }

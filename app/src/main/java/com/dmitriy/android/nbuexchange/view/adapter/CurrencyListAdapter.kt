@@ -13,7 +13,7 @@ class CurrencyListAdapter : RecyclerView.Adapter<CurrencyViewHolder>() {
     var currendList: ArrayList<CurrencyEntity>? = ArrayList()
     private lateinit var listener: ItemClickListener
 
-    fun setCurrencyList(listOfCurrency: ArrayList<CurrencyEntity>){
+    fun setCurrencyList(listOfCurrency: List<CurrencyEntity>){
         currendList?.clear()
         currendList?.addAll(listOfCurrency)
         notifyDataSetChanged()

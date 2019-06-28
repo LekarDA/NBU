@@ -9,15 +9,16 @@ import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
 import com.dmitriy.android.nbuexchange.presenter.ListPresenterContract
 import com.dmitriy.android.nbuexchange.view.adapter.CurrencyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresenterContract.ListView{
+class MainActivity : CoroutineAppCompatActivity(), ItemClickListener, ListPresenterContract.ListView{
 
 
 
     @Inject
-    lateinit var presenter:ListPresenterContract.ListPresenter
+    lateinit var presenter: ListPresenterContract.ListPresenter
 
     private val CURRENCY_DATA = "CURRENCY_DATA"
     private lateinit var  layoutManager : LinearLayoutManager
@@ -29,7 +30,10 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresente
         App.component.injectActivity(this)
         presenter.setView(this)
         initList()
-        presenter.loadData()
+        if(savedInstanceState == null)
+            launch { adapter.setCurrencyList(presenter.getData()) }
+        else adapter.setCurrencyList(savedInstanceState.getParcelableArrayList(CURRENCY_DATA))
+
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -45,15 +49,13 @@ class MainActivity : CoroutineAppCompatActivity(),ItemClickListener,ListPresente
         adapter.setItemClickListener(this)
     }
 
-    override fun setDataInList(listCurrency: List<CurrencyEntity>?) {
-        adapter.setCurrencyList(ArrayList(listCurrency))
-    }
-
 
     override fun onItemClick(currencyId: Int?) {
-//        var exchangeEntity: ExchangeEntity?=null
-//        val intent = DetailActivity.newIntent(this, exchangeEntity)
-//        startActivity(intent)
+        launch {
+            val intent = DetailActivity.newIntent(this@MainActivity, presenter.getExchangeEntity(currencyId?.toLong()))
+            startActivity(intent)
+        }
+
     }
 }
 

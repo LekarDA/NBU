@@ -5,14 +5,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
-open class BasePresenter<T : BaseView>() : CoroutineScope {
+open class BasePresenter<T : BaseView> : CoroutineScope {
     private val Job = Job()
     protected var view: T? = null
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job
 
-    fun destroy(){
+    fun destroy() {
         Job.cancel()
         view = null
     }
