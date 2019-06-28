@@ -3,12 +3,8 @@ package com.dmitriy.android.nbuexchange.managers
 import com.dmitriy.android.nbuexchange.data.Currency
 import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
 import com.dmitriy.android.nbuexchange.data.room.ExchangeEntity
-import java.util.ArrayList
 
 class CurrencyMapper {
-    var listCurrencyEntity = ArrayList<CurrencyEntity>()
-    var listExchangeEntity = ArrayList<ExchangeEntity>()
-
 
      fun map(currency: Currency):Pair<CurrencyEntity,ExchangeEntity>{
         val currencyEntity = CurrencyEntity(id=currency.id + (0..1000000).random(),name = currency.name,code = currency.code)

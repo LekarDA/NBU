@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dmitriy.android.nbuexchange.App
 import com.dmitriy.android.nbuexchange.R
-import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
 import com.dmitriy.android.nbuexchange.presenter.ListPresenterContract
 import com.dmitriy.android.nbuexchange.view.adapter.CurrencyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -55,7 +54,6 @@ class MainActivity : CoroutineAppCompatActivity(), ItemClickListener, ListPresen
             val intent = DetailActivity.newIntent(this@MainActivity, presenter.getExchangeEntity(currencyId?.toLong()))
             startActivity(intent)
         }
-
     }
 }
 

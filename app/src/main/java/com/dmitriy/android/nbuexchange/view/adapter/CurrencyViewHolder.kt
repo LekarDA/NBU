@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dmitriy.android.nbuexchange.data.room.CurrencyEntity
 import kotlinx.android.synthetic.main.currency_item.view.*
 
-class CurrencyViewHolder(containerView: View) : RecyclerView.ViewHolder(containerView)/*, View.OnClickListener*/ {
+class CurrencyViewHolder(containerView: View) : RecyclerView.ViewHolder(containerView) {
 
     private var view: View = containerView
 

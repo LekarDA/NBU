@@ -16,6 +16,6 @@ interface ListPresenterContract {
     }
 
     interface ListView: BaseView{
-//        fun setDataInList(listCurrency : List<CurrencyEntity>?)
+        //TODO add some extra func for view
     }
 }
