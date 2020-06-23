@@ -14,8 +14,6 @@ import javax.inject.Inject
 
 class MainActivity : CoroutineAppCompatActivity(), ItemClickListener, ListPresenterContract.ListView{
 
-
-
     @Inject
     lateinit var presenter: ListPresenterContract.ListPresenter
 
@@ -35,8 +33,8 @@ class MainActivity : CoroutineAppCompatActivity(), ItemClickListener, ListPresen
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putParcelableArrayList(CURRENCY_DATA, adapter.currendList)
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelableArrayList(CURRENCY_DATA, adapter.currendList)
         super.onSaveInstanceState(outState)
     }
 
@@ -47,7 +45,6 @@ class MainActivity : CoroutineAppCompatActivity(), ItemClickListener, ListPresen
         list.adapter = adapter
         adapter.setItemClickListener(this)
     }
-
 
     override fun onItemClick(currencyId: Int?) {
         launch {
